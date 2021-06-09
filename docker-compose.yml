@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: backend
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`${DOMAIN}`) && (Path(`/stream`) || Path(`/messages`))"
+      - "traefik.http.routers.backend.tls.certresolver=le"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.services.backend.loadbalancer.server.port=3000"
+    networks:
+      - default
+      - proxy
+
+  frontend:
+    build:
+      context: frontend
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.frontend.tls.certresolver=le"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.services.frontend.loadbalancer.server.port=4000"
+    networks:
+      - proxy
+
+  redis:
+    image: redis
+    restart: always
+    networks:
+      - default
+
+networks:
+  proxy:
+    external: true
