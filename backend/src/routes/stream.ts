@@ -1,7 +1,7 @@
 import { FastifyPluginAsync } from "fastify";
 import { fromEvent, Observable } from "rxjs";
 import { map, takeUntil } from "rxjs/operators";
-import { STREAM_NAME } from "../constants";
+import { MESSAGE_LIVESPAN, STREAM_NAME } from "../constants";
 import { kvpToObj, observableToEventIterator } from "../utils";
 
 interface EventMessage {
@@ -44,7 +44,7 @@ const stream: FastifyPluginAsync = async (fastify, opts) => {
   }
 
   fastify.get("/stream", function (request, reply) {
-    const initialEvent = `${+new Date() - 10 * 60 * 1000}-0`;
+    const initialEvent = `${+new Date() - MESSAGE_LIVESPAN}-0`;
     const lastEventId =
       typeof request.headers["Last-Event-ID"] === "string"
         ? request.headers["Last-Event-ID"]
