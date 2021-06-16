@@ -8,6 +8,13 @@
 
 	if (browser) {
 		onMount(async () => {
+			var r = document.querySelector<HTMLElement>(':root');
+			var color = `hsl(${Math.random() * 360}, 60%, 53%)`;
+
+			r.style.setProperty('--accent', color);
+		});
+
+		onMount(async () => {
 			const evtSource = new EventSource('//chat.mibdev.com/stream');
 
 			evtSource.addEventListener('message', async (ev) => {
@@ -53,7 +60,15 @@
 </script>
 
 <ul class="chat" bind:this={scrollView}>
-	<li class="no-more-items">Nothing here...</li>
+	<li class="no-more-items">Older messages will not be available</li>
+	<li class="no-more-items">
+		This project is a tribute to <a href="https://github.com/BrunoS3D/xit-xat"
+			>Bruno Silva's Xit-Xat</a
+		>
+	</li>
+	<li class="no-more-items">
+		Source code available at <a href="https://github.com/mukaschultze/shit-chat">GitHub</a>
+	</li>
 	{#each messages as message (message.id)}
 		<li class:sent={message.mine} class="message">
 			<img src={message.avatar} />
@@ -70,6 +85,10 @@
 
 <style lang="scss">
 	@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+	:root {
+		--accent: #7c40ff;
+	}
 
 	:global(*) {
 		color: #fff;
@@ -97,7 +116,11 @@
 
 		.no-more-items {
 			text-align: center;
-			opacity: 0.4;
+			color: grey;
+
+			a {
+				color: var(--accent);
+			}
 		}
 
 		li.message {
@@ -129,7 +152,7 @@
 
 			&.sent {
 				align-self: flex-end;
-				background: #7c40ff;
+				background: var(--accent);
 				border-radius: 20px 5px 5px 20px;
 				.time {
 					text-align: right;
@@ -160,7 +183,7 @@
 
 		button {
 			margin-left: 8px;
-			background: #7c40ff;
+			background: var(--accent);
 			border: none;
 			border-radius: 20px;
 			padding: 14px;

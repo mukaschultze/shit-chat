@@ -20,5 +20,5 @@ ENV PORT=4000
 EXPOSE 4000
 
 COPY --from=builder /chat/build .
-HEALTHCHECK --interval=20s --timeout=4s CMD wget -nv -t1 --spider 'http://localhost:4000/' || exit 1
+HEALTHCHECK --interval=20s --timeout=4s --start-period=1s CMD wget -nv -t1 --spider 'http://localhost:4000/' || exit 1
 CMD node index.js
