@@ -69,6 +69,7 @@
 <svelte:head>
 	<title>Shit Chat</title>
 	<link rel="shortcut icon" type="image/jpg" href="https://robohash.org/shitchat.png?set=set4" />
+	<link rel="icon" type="image/jpg" href="https://robohash.org/shitchat.png?set=set4" />
 </svelte:head>
 
 <ul class="chat" bind:this={scrollView}>
