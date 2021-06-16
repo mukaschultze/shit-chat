@@ -7,7 +7,7 @@ services:
     restart: always
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`${DOMAIN}`) && (Path(`/stream`) || Path(`/messages`))"
+      - "traefik.http.routers.backend.rule=Host(`${DOMAIN}`) && (Path(`/stream`) || Path(`/messages`) || Path(`/status`))"
       - "traefik.http.routers.backend.tls.certresolver=le"
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.services.backend.loadbalancer.server.port=3000"
