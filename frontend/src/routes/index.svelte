@@ -1,5 +1,10 @@
+<script context="module" lang="ts">
+	export const prerender = true;
+</script>
+
 <script lang="ts">
 	import { browser } from '$app/env';
+	import { DateTime, Settings } from 'luxon';
 	import { onMount, tick } from 'svelte';
 
 	let messageContent = '';
@@ -8,6 +13,8 @@
 
 	if (browser) {
 		onMount(async () => {
+			Settings.defaultLocale = navigator.language;
+
 			var r = document.querySelector<HTMLElement>(':root');
 			var color = `hsl(${Math.random() * 360}, 60%, 53%)`;
 
@@ -59,6 +66,11 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Shit Chat</title>
+	<link rel="shortcut icon" type="image/jpg" href="https://robohash.org/shitchat.png?set=set4" />
+</svelte:head>
+
 <ul class="chat" bind:this={scrollView}>
 	<li class="no-more-items">Older messages will not be available</li>
 	<li class="no-more-items">
@@ -73,7 +85,8 @@
 		<li class:sent={message.mine} class="message">
 			<img src={message.avatar} />
 			{message.content}
-			<span class="time">{new Date(message.date).toISOString().slice(11, 16)}</span>
+			<span class="time">{DateTime.fromISO(message.date).toLocaleString(DateTime.TIME_SIMPLE)}</span
+			>
 		</li>
 	{/each}
 </ul>

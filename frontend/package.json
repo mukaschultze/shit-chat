@@ -12,6 +12,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-node": "^1.0.0-next.24",
+		"@types/luxon": "^1.27.0",
 		"@typescript-eslint/eslint-plugin": "^4.19.0",
 		"@typescript-eslint/parser": "^4.19.0",
 		"eslint": "^7.22.0",
@@ -28,6 +29,7 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/kit": "next",
+		"luxon": "^1.27.0",
 		"node-sass": "^6.0.0"
 	}
 }
